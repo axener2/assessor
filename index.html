@@ -6,115 +6,159 @@
   <title>Clinical Establishments Assessor</title>
   <style>
     :root{
-      --bg: #0f172a;
-      --panel: #111827;
-      --muted: #94a3b8;
-      --text: #e5e7eb;
-      --brand: #14b8a6;
-      --brand-strong:#0d9488;
-      --card: #0b1220;
-      --chip:#1f2937;
+      --bg:#0f172a;           /* slate-900 */
+      --panel:#111827;        /* gray-900 */
+      --muted:#94a3b8;        /* slate-400 */
+      --text:#e5e7eb;         /* gray-200 */
+      --brand:#14b8a6;        /* teal-500 */
+      --brand-strong:#0d9488; /* teal-600 */
+      --card:#0b1220;         /* deep panel */
+      --chip:#1f2937;         /* gray-800 */
       --border:#23314a;
       --hover:#0b1626;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius: 14px;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:14px;
     }
 
-    *{ box-sizing: border-box; }
-    html,body{ height:100%; margin:0; }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
     body{
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      color: var(--text);
-      background: radial-gradient(1200px 800px at 70% -200px, rgba(20,184,166,.18), transparent 55%),
-                  radial-gradient(900px 700px at -200px 30%, rgba(20,184,166,.10), transparent 60%),
-                  var(--bg);
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 70% -200px, rgba(20,184,166,.18), transparent 55%),
+        radial-gradient(900px 700px at -200px 30%, rgba(20,184,166,.10), transparent 60%),
+        var(--bg);
     }
 
-    .app{ display:grid; grid-template-columns: 280px 1fr; min-height:100dvh; }
+    /* Layout */
+    .app{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
     aside{
-      position: sticky; top:0; height:100dvh;
-      padding:20px 18px;
-      border-right:1px solid var(--border);
-      background: var(--panel);
-      transition: transform 0.3s ease-in-out;
+      position:sticky;top:0;height:100vh;overflow:auto;
+      padding:20px 18px;border-right:1px solid var(--border);
+      background:
+        radial-gradient(600px 500px at -120px -120px, rgba(20,184,166,.18), transparent 60%),
+        var(--panel);
     }
-    aside.hidden { transform: translateX(-100%); }
+    main{padding:26px 26px 42px;overflow:auto}
 
-    .brand{ display:flex; align-items:center; gap:12px; margin-bottom:18px; padding:10px 12px; border:1px solid var(--border); border-radius:12px; }
-    .brand-logo{ width:36px; height:36px; border-radius:9px; background: linear-gradient(135deg, rgba(20,184,166,.6), rgba(20,184,166,.15)); border:1px solid var(--border); }
-    .brand h1{ font-size:15px; margin:0 0 2px 0; font-weight:700; }
-    .brand small{ color: var(--muted); }
+    /* Sidebar */
+    .brand{
+      display:flex;align-items:center;gap:12px;margin-bottom:18px;
+      padding:10px 12px;border:1px solid var(--border);border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,.03), transparent);
+      box-shadow:inset 0 2px 12px rgba(0,0,0,.2);
+    }
+    .brand-logo{
+      width:36px;height:36px;border-radius:9px;
+      background:
+        conic-gradient(from 210deg at 50% 50%, rgba(20,184,166,0) 0 53%, rgba(20,184,166,.85) 53% 63%, rgba(20,184,166,0) 63% 100%),
+        linear-gradient(135deg, rgba(20,184,166,.6), rgba(20,184,166,.15));
+      outline:1px solid var(--border);
+      box-shadow:var(--shadow);
+    }
+    .brand h1{font-size:15px;margin:0 0 2px 0;font-weight:700;letter-spacing:.2px}
+    .brand small{color:var(--muted)}
 
-    nav{ margin-top: 10px; }
-    .menu{ display:flex; flex-direction:column; gap:6px; margin:10px 0 18px; }
-    .menu a{ display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:12px; color: var(--text); text-decoration:none; }
-    .menu a:hover{ background: var(--hover); border-color: var(--border); }
-    .menu a.active{ background: linear-gradient(180deg, rgba(20,184,166,.15), rgba(20,184,166,.05)); border:1px solid rgba(20,184,166,.35); }
-    .dot{ width:9px; height:9px; border-radius:50%; background: var(--brand); }
-
-    main{ padding:26px; }
-    .topbar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
-    .greet{ display:flex; align-items:center; gap:12px; font-size:22px; font-weight:800; }
-    .greet img{ width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid var(--brand); }
-    .chip{ font-size:12px; padding:4px 10px; border-radius:999px; background: var(--chip); color: var(--muted); border:1px solid var(--border); }
-    .btn{ padding:10px 14px; border-radius:12px; border:1px solid var(--border); background: var(--chip); color: var(--text); cursor:pointer; }
-    .btn.primary{ background: var(--brand); border:none; color:#fff; }
-
-    /* Hamburger */
-    .hamburger{
-      display:none;
-      font-size:26px;
-      background:none;
-      border:none;
-      color: var(--text);
-      cursor:pointer;
+    nav{margin-top:10px}
+    .menu{display:flex;flex-direction:column;gap:6px;margin:10px 0 18px}
+    .menu a{
+      display:flex;align-items:center;gap:12px;
+      padding:10px 12px;border-radius:12px;color:var(--text);text-decoration:none;
+      border:1px solid transparent;
+    }
+    .menu a:hover{background:var(--hover);border-color:var(--border)}
+    .menu a.active{
+      background:linear-gradient(180deg, rgba(20,184,166,.15), rgba(20,184,166,.05));
+      border:1px solid rgba(20,184,166,.35);
+      box-shadow:0 6px 20px rgba(20,184,166,.20);
+    }
+    .dot{width:9px;height:9px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 4px rgba(20,184,166,.12)}
+    /* (Missing before) badge styling */
+    .badge{
+      margin-left:auto;font-size:12px;padding:2px 8px;border-radius:999px;
+      background:var(--chip);color:var(--muted);border:1px solid var(--border)
     }
 
-    .grid{ display:grid; gap:16px; grid-template-columns: repeat(12, 1fr); }
-    .card{ background: var(--card); border:1px solid var(--border); border-radius: var(--radius); padding:16px; box-shadow: var(--shadow); }
-    .card h3{ margin:0 0 8px; font-size:15px; color: var(--muted); font-weight:700; }
-    .stat{ font-size:28px; font-weight:800; }
-    .row-3{ grid-column: span 3; }
-    .row-5{ grid-column: span 5; }
-    .row-6{ grid-column: span 6; }
-    .row-7{ grid-column: span 7; }
-    .row-12{ grid-column: span 12; }
+    /* Topbar */
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px}
+    .greet{
+      font-size:clamp(18px,2.2vw,26px);font-weight:800;letter-spacing:.2px;
+      display:flex;align-items:center;gap:12px
+    }
+    .greet img{
+      width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--brand)
+    }
+    .chip{
+      font-size:12px;padding:4px 10px;border-radius:999px;background:var(--chip);color:var(--muted);border:1px solid var(--border)
+    }
+    .actions{display:flex;gap:10px}
+    .btn{
+      padding:10px 14px;border-radius:12px;border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), transparent);
+      color:var(--text);cursor:pointer
+    }
+    .btn.primary{
+      background:linear-gradient(180deg, var(--brand), var(--brand-strong));
+      border:none;box-shadow:0 10px 24px rgba(20,184,166,.35);font-weight:700;color:#fff
+    }
 
-    .list{ list-style:none; margin:0; padding:0; }
-    .list li{ display:flex; justify-content:space-between; align-items:center; padding:8px; border-bottom:1px solid var(--border); }
-    .list li:last-child{ border-bottom:none; }
-    .pill{ font-size:12px; padding:2px 8px; border-radius:999px; background: var(--chip); color: var(--muted); border:1px solid var(--border); }
+    /* Cards/Grid */
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)
+    }
+    .card h3{margin:0 0 8px;font-size:15px;color:var(--muted);font-weight:700;letter-spacing:.2px}
+    .stat{font-size:clamp(20px,3vw,32px);font-weight:800;margin:4px 0 0}
+    .row-3{grid-column:span 3}
+    .row-5{grid-column:span 5}
+    .row-6{grid-column:span 6}
+    .row-7{grid-column:span 7}
+    .row-12{grid-column:span 12}
 
-    /* Mobile */
-    @media (max-width: 980px){
-      .app{ grid-template-columns: 1fr; }
-      aside{ position: fixed; left:0; top:0; bottom:0; width:260px; z-index:1000; }
-      .hamburger{ display:block; }
+    /* Lists */
+    .list{margin:0;padding:0;list-style:none}
+    .list li{
+      display:flex;align-items:center;gap:12px;justify-content:space-between;
+      padding:10px 8px;border-radius:10px;border:1px solid transparent
+    }
+    .list li:hover{background:var(--hover);border-color:var(--border)}
+    .pill{
+      font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid var(--border);
+      background:var(--chip);color:var(--muted)
+    }
+
+    /* Responsive */
+    @media (max-width:980px){
+      .app{grid-template-columns:1fr}
+      aside{position:static;height:auto}
     }
   </style>
 </head>
 <body>
   <div class="app">
     <!-- SIDEBAR -->
-    <aside id="sidebar" class="hidden">
+    <aside>
       <div class="brand">
-        <div class="brand-logo"></div>
+        <div class="brand-logo" aria-hidden="true"></div>
         <div>
           <h1>Assessor Console</h1>
           <small>Kerala Clinical Establishments</small>
         </div>
       </div>
+
       <nav>
-        <div class="menu">
+        <div class="menu" role="navigation" aria-label="Main">
           <a class="active" href="#dashboard"><span class="dot"></span> Dashboard</a>
-          <a href="#pending"><span class="dot"></span> Pending Assessments</a>
+          <a href="#pending"><span class="dot"></span> Pending Assessments <span class="badge">6</span></a>
           <a href="#completed"><span class="dot"></span> Completed</a>
-          <a href="#upcoming"><span class="dot"></span> Upcoming Visits</a>
-          <a href="#guidelines"><span class="dot"></span> Guidelines</a>
-          <a href="#notes"><span class="dot"></span> My Notes</a>
+          <a href="#upcoming"><span class="dot"></span> Upcoming Visits <span class="badge">3</span></a>
+          <a href="#guidelines"><span class="dot"></span> Guidelines & Templates</a>
+          <a href="#notes"><span class="dot"></span> My Notes / Drafts</a>
           <a href="#notifications"><span class="dot"></span> Notifications</a>
-          <a href="#profile"><span class="dot"></span> Profile</a>
-          <a href="#help"><span class="dot"></span> Help</a>
+          <a href="#profile"><span class="dot"></span> Profile & Settings</a>
+          <a href="#help"><span class="dot"></span> Help & Support</a>
         </div>
       </nav>
     </aside>
@@ -122,7 +166,6 @@
     <!-- MAIN -->
     <main>
       <div class="topbar">
-        <button class="hamburger" onclick="toggleSidebar()">☰</button>
         <div class="greet">
           <img src="profile.jpg" alt="Profile photo">
           Welcome back, Dr. Nitin
@@ -134,20 +177,92 @@
         </div>
       </div>
 
-      <!-- Example dashboard content -->
-      <section id="dashboard" class="grid">
+      <!-- STATS -->
+      <section id="dashboard" class="grid" aria-label="Dashboard">
         <div class="card row-3"><h3>Pending Assessments</h3><div class="stat">6</div></div>
-        <div class="card row-3"><h3>Completed</h3><div class="stat">12</div></div>
+        <div class="card row-3"><h3>Completed (Sep)</h3><div class="stat">12</div></div>
         <div class="card row-3"><h3>Upcoming Visits</h3><div class="stat">3</div></div>
-        <div class="card row-3"><h3>Revisions</h3><div class="stat">1</div></div>
+        <div class="card row-3"><h3>Revisions Requested</h3><div class="stat">1</div></div>
+
+        <!-- PENDING LIST -->
+        <div id="pending" class="card row-5">
+          <h3>Pending — Next Actions</h3>
+          <ul class="list">
+            <li><span class="pill">Hospital</span> Caritas Hospital <span class="pill">Due: 18 Sep</span></li>
+            <li><span class="pill">Family Hospital</span> Caritas Family Hospital <span class="pill">Due: 19 Sep</span></li>
+            <li><span class="pill">Hospital</span> JK Hospital <span class="pill">Due: 20 Sep</span></li>
+            <li><span class="pill">FHC</span> FHC, Koruthodu <span class="pill">Due: 22 Sep</span></li>
+            <li><span class="pill">Taluk</span> Taluk Hospital <span class="pill">Due: 23 Sep</span></li>
+            <li><span class="pill">Taluk</span> Vaikom Hospital <span class="pill">Due: 25 Sep</span></li>
+          </ul>
+        </div>
+
+        <!-- CALENDAR / UPCOMING -->
+        <div id="upcoming" class="card row-7">
+          <h3>Upcoming Visits</h3>
+          <ul class="list">
+            <li><span class="pill">18 Sep, 10:00</span> Caritas Hospital — Onsite assessment (OT, ICU, Surgery)</li>
+            <li><span class="pill">19 Sep, 11:30</span> Caritas Family Hospital — Day care & Pharmacy</li>
+            <li><span class="pill">20 Sep, 09:30</span> JK Hospital — Emergency & ICU</li>
+          </ul>
+        </div>
+
+        <!-- COMPLETED -->
+        <div id="completed" class="card row-6">
+          <h3>Completed (Recent)</h3>
+          <ul class="list">
+            <li><span class="pill">✓</span> Holy Cross Medical Centre — Report generated (PDF) <span class="pill">12 Sep</span></li>
+            <li><span class="pill">✓</span> Manna Dental Care — Compliance 92% <span class="pill">10 Sep</span></li>
+          </ul>
+        </div>
+
+        <!-- GUIDELINES -->
+        <div id="guidelines" class="card row-6">
+          <h3>Guidelines & Templates</h3>
+          <ul class="list">
+            <li><span class="pill">Checklist</span> OP/IP Services • ICU • OT • Radiology • Lab</li>
+            <li><span class="pill">Form</span> Fire & Electrical Safety • BMWM • HR & Credentials</li>
+            <li><span class="pill">Template</span> Assessment Report • CAPA • Summary Sheet</li>
+          </ul>
+        </div>
+
+        <!-- NOTES -->
+        <div id="notes" class="card row-12">
+          <h3>My Notes / Drafts</h3>
+          <p style="color:var(--muted);margin:0">
+            Jot field notes here (auto-saved in future). You can paste findings, attach photos, and mark follow-ups.
+          </p>
+        </div>
+
+        <!-- NOTIFICATIONS -->
+        <div id="notifications" class="card row-6">
+          <h3>Notifications</h3>
+          <ul class="list">
+            <li><span class="pill">Alert</span> New assignment from KSCCE HQ</li>
+            <li><span class="pill">Info</span> Template update: ICU staffing matrix v2.1</li>
+            <li><span class="pill">Reminder</span> Submit Caritas Family Hospital report by 21 Sep</li>
+          </ul>
+        </div>
+
+        <!-- PROFILE -->
+        <div id="profile" class="card row-6">
+          <h3>Profile & Settings</h3>
+          <ul class="list">
+            <li><span class="pill">Name</span> Dr. Nitin John Thomas</li>
+            <li><span class="pill">Role</span> Clinical Establishments Assessor</li>
+            <li><span class="pill">Signature</span> Add / Update Digital Signature</li>
+          </ul>
+        </div>
+
+        <!-- HELP -->
+        <div id="help" class="card row-12">
+          <h3>Help & Support</h3>
+          <p style="color:var(--muted);margin:0">
+            FAQs • Assessor Handbook • Contact KSCCE Support — guidance on standards, documentation, and reporting.
+          </p>
+        </div>
       </section>
     </main>
   </div>
-
-  <script>
-    function toggleSidebar(){
-      document.getElementById("sidebar").classList.toggle("hidden");
-    }
-  </script>
 </body>
 </html>
